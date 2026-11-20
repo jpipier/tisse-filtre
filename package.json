@@ -1,6 +1,6 @@
 {
   "name": "tisse-filtre",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Extension Chrome qui masque les pubs et les images générées par IA sur Pinterest.",
   "type": "module",

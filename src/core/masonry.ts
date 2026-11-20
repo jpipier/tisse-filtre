@@ -50,6 +50,22 @@ function measureGap(columns: Tile[][]): number {
 }
 
 /**
+ * Place occupée par une épingle masquée (hauteur + écart). Sans hauteur mesurée, elle se déduit de la position
+ * d'origine de l'épingle suivante dans la colonne, que Pinterest a calculée en tenant compte de la masquée.
+ */
+function footprint(tile: Tile, next: Tile | undefined, gap: number): number {
+  if (tile.height > 0) return tile.height + gap;
+  if (next && next.y > tile.y) return next.y - tile.y;
+  return 0;
+}
+
+/** Mémorise une épingle masquée : une nouvelle mesure l'emporte, une mesure nulle garde la hauteur connue. */
+export function rememberHidden(previous: Tile | undefined, next: Tile): Tile {
+  if (next.height > 0 || !previous) return next;
+  return { ...next, height: previous.height };
+}
+
+/**
  * Nouvelle position verticale des épingles visibles à déplacer (clé → y).
  * Les épingles masquées peuvent ne plus être dans le DOM : elles comptent tant qu'on les fournit.
  */
@@ -60,9 +76,9 @@ export function compactColumns(tiles: Tile[]): Map<string, number> {
 
   for (const column of columns) {
     let shift = 0;
-    for (const tile of column) {
+    for (const [index, tile] of column.entries()) {
       if (tile.hidden) {
-        if (tile.height > 0) shift += tile.height + gap;
+        shift += footprint(tile, column[index + 1], gap);
         continue;
       }
       if (shift > 0) moves.set(tile.key, tile.y - shift);

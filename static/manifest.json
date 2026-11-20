@@ -3,7 +3,7 @@
   "name": "__MSG_name__",
   "short_name": "Tissé filtre",
   "description": "__MSG_description__",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "default_locale": "fr",
   "homepage_url": "https://github.com/jpipier/tisse-filtre",
   "permissions": [

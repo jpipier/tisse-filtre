@@ -2,7 +2,7 @@
 // décide (pub / IA probable) et pose un voile, ou masque, selon les réglages.
 import { classifyPin, isAiLabelText, isSponsoredLabel, type AiReason } from "./core/classify";
 import { explainPin } from "./core/explain";
-import { compactColumns, parseTranslate, type Tile } from "./core/masonry";
+import { compactColumns, parseTranslate, rememberHidden, type Tile } from "./core/masonry";
 import { mergePins, signatureFromImageUrl, type PinInfo } from "./core/pins";
 import {
   ALLOWED_KEY,
@@ -233,6 +233,9 @@ function veil(unit: Unit, kind: "ad" | "ai", reasons: AiReason[]): void {
 
   element.dataset.tisse = kind;
   element.dataset.tisseState = state;
+  // Mesure avant de masquer : une fois en display:none, la hauteur n'est plus lisible.
+  const height = parseFloat(element.style.height) || element.offsetHeight;
+  if (height > 0) element.dataset.tisseH = String(height);
   element.dataset.tisseMode = displayMode();
   ensurePositioned(element);
 
@@ -446,7 +449,7 @@ function compactMasonry(): void {
       const hidden = item.dataset.tisseMode === "remove";
       const key = item.dataset.tisseKey ?? `${origin.x}:${origin.y}`;
       const tile: Tile = { key, x: origin.x, y: origin.y, height: heightOf(item), hidden };
-      if (hidden) state.hidden.set(key, tile);
+      if (hidden) state.hidden.set(key, rememberHidden(state.hidden.get(key), tile));
       else state.hidden.delete(key);
       mounted.push({ item, tile });
     }
