@@ -234,4 +234,11 @@ for (const lang of ["fr", "en"]) {
   await render(shot3(t), `${dir}/3-reglages.png`);
   await render(promo(t), `${out}/promo-440x280-${lang}.png`);
 }
+// Icône de la fiche : 128×128, logo de 96×96 centré, 16 px de marge transparente (consignes du Chrome Web Store).
+const logo = await sharp(`${root}static/icon.svg`, { density: 300 }).resize(96, 96).png().toBuffer();
+await sharp({ create: { width: 128, height: 128, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+  .composite([{ input: logo, left: 16, top: 16 }])
+  .png()
+  .toFile(`${out}/icon-128.png`);
+
 console.log(`Visuels générés dans ${out}`);

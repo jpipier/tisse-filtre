@@ -1,6 +1,7 @@
 # Fiche Chrome Web Store — à copier dans le tableau de bord
 
 Paquet à envoyer : `tisse-filtre.zip` (produit par `npm run zip`).
+Icône de la fiche : `store/icon-128.png` (128×128, logo 96×96 et 16 px de marge transparente).
 Visuels : `store/screenshots/fr/*.png`, `store/screenshots/en/*.png` (1280×800), `store/promo-440x280-fr.png` / `-en.png`.
 
 ---
