@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tissé filtre</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header>
+      <img src="icons/32.png" alt="" width="24" height="24" />
+      <h1>Pinterest sans pub ni IA</h1>
+      <label class="switch" title="Activer ou mettre en pause">
+        <input type="checkbox" id="enabled" />
+        <span></span>
+      </label>
+    </header>
+
+    <section class="stats" aria-live="polite">
+      <div><strong id="stat-ads">0</strong><span>pubs masquées</span></div>
+      <div><strong id="stat-ai">0</strong><span>images IA masquées</span></div>
+    </section>
+    <p class="hint">sur cette page</p>
+
+    <section class="options">
+      <label><input type="checkbox" id="hideAds" /> Masquer les publicités</label>
+      <label><input type="checkbox" id="hideAi" /> Masquer les images générées par IA</label>
+      <label class="sub"><input type="checkbox" id="pinterestFilter" /> Activer d'office le filtre « Moins d'IA » de Pinterest</label>
+      <label class="sub"><input type="checkbox" id="sizeHeuristic" /> Repérer aussi les dimensions typiques des générateurs <small>(recommandé)</small></label>
+      <fieldset>
+        <legend>Affichage</legend>
+        <label><input type="radio" name="mode" value="veil" /> Voile flouté, avec « Afficher »</label>
+        <label><input type="radio" name="mode" value="remove" /> Retirer complètement, sans trou dans la mosaïque</label>
+      </fieldset>
+    </section>
+
+    <section class="options">
+      <label><input type="checkbox" id="debug" /> Mode debug : expliquer chaque décision sur les épingles</label>
+    </section>
+
+    <details id="detector">
+      <summary>Détecteur avancé (optionnel)</summary>
+      <p>
+        Pour les images IA sans aucun indice, l'extension peut interroger le détecteur
+        <a href="https://sightengine.com/detect-ai-generated-images" target="_blank" rel="noopener">Sightengine</a>
+        avec <em>votre</em> clé. Seule l'adresse publique de l'image est envoyée.
+      </p>
+      <label><input type="checkbox" id="detectorEnabled" /> Activer le détecteur</label>
+      <label class="field">API user <input type="text" id="apiUser" autocomplete="off" spellcheck="false" /></label>
+      <label class="field">API secret <input type="password" id="apiSecret" autocomplete="off" /></label>
+      <label class="field">Appels par jour, au plus <input type="number" id="dailyLimit" min="0" max="10000" step="50" /></label>
+      <p id="detector-status" class="hint"></p>
+    </details>
+
+    <footer>
+      <span id="lists"></span>
+      <button type="button" id="reset-lists">Réinitialiser</button>
+    </footer>
+    <script src="popup.js"></script>
+  </body>
+</html>

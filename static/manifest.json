@@ -1,0 +1,73 @@
+{
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "short_name": "Tissé filtre",
+  "description": "__MSG_description__",
+  "version": "1.0.0",
+  "default_locale": "fr",
+  "homepage_url": "https://github.com/jpipier/tisse-filtre",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.pinterest.com/*",
+    "https://*.pinterest.fr/*",
+    "https://*.pinterest.ca/*",
+    "https://*.pinterest.ch/*",
+    "https://*.pinterest.de/*",
+    "https://*.pinterest.at/*",
+    "https://*.pinterest.es/*",
+    "https://*.pinterest.it/*",
+    "https://*.pinterest.pt/*",
+    "https://*.pinterest.co.uk/*",
+    "https://*.pinterest.ie/*",
+    "https://*.pinterest.nz/*",
+    "https://*.pinterest.com.au/*",
+    "https://*.pinterest.com.mx/*"
+  ],
+  "optional_host_permissions": [
+    "https://api.sightengine.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "__PINTEREST__"
+      ],
+      "js": [
+        "page-hook.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "__PINTEREST__"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "__MSG_name__",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  }
+}
